@@ -40,11 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 EXTERNAL_APPS=[
+    "rest_framework",
+    'rest_framework_simplejwt',
+    'rest_framework.authtoken',
     'accounts',
     'cart',
-    'menu'
-    'review'
-    "rest_framework",
+    'menu',
+    'review',
+   
 ]
 INSTALLED_APPS.extend(EXTERNAL_APPS)
 
@@ -57,6 +60,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
 
 ROOT_URLCONF = 'Restro_management.urls'
 
@@ -76,6 +87,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Restro_management.wsgi.application'
+AUTH_USER_MODEL='accounts.CustomUser'
 
 
 # Database
