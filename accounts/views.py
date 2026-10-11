@@ -7,14 +7,26 @@ from rest_framework import authentication
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework.authtoken.models import Token
 
-from .serializers import RegisterSerializer
+from .serializers import CustomerRegisterSerializer,AdminRegisterSerializer,StaffRegisterSerializer
 
 User = get_user_model()
 
 
-class RegisterView(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = RegisterSerializer
+class CustomerRegisterView(viewsets.ModelViewSet):
+    queryset = User.objects.filter(role="CUSTOMER")
+    serializer_class = CustomerRegisterSerializer
+    permission_classes = [AllowAny]
+    http_method_names = ["post", "head", "options"]
+
+class AdminRegisterView(viewsets.ModelViewSet):
+    queryset = User.objects.filter(role="ADMIN")
+    serializer_class = AdminRegisterSerializer
+    permission_classes = [AllowAny]
+    http_method_names = ["post", "head", "options"]
+
+class StaffRegisterView(viewsets.ModelViewSet):
+    queryset = User.objects.filter(role="STAFF")
+    serializer_class = StaffRegisterSerializer
     permission_classes = [AllowAny]
     http_method_names = ["post", "head", "options"]
 
